@@ -6,7 +6,7 @@ bp = Blueprint('collectorCountryPool', __name__, url_prefix='/collectorCountryPo
 
 @bp.route('/', methods=['POST'])
 
-def getCollectorByCountry():
+def getCollectorByCountryPool():
     # Get country from request
     country = request.json['country']
     # Get result from request
