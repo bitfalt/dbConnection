@@ -10,4 +10,5 @@ def getCollectorByCountryNoPool():
     country = request.json['country']
     # Get result from request
     result = collectorCountry_controller.getCollectorByCountry(False, country)
-    return jsonify([dict(row) for row in result])
+    
+    return jsonify(result)
