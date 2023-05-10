@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from repositories import collectorCountry_repository
+from ..repositories import collectorCountry_repository
 
 # Create blueprint (route)
 bp = Blueprint('collectorCountryPool', __name__, url_prefix='/collectorCountryPool')

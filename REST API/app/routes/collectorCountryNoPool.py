@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from controllers import collectorCountry_controller
+from ..controllers import collectorCountry_controller
 
 # Create blueprint (route)
 bp = Blueprint('collectorCountryNoPool', __name__, url_prefix='/collectorCountryNoPool')
