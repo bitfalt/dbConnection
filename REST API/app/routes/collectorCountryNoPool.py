@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from repositories.collectorCountry_repository import getCollectorCountry
+from controllers import collectorCountry_controller
 
 # Create blueprint (route)
 bp = Blueprint('collectorCountryNoPool', __name__, url_prefix='/collectorCountryNoPool')
@@ -9,5 +9,5 @@ def getCollectorByCountryNoPool():
     # Get country from request
     country = request.json['country']
     # Get result from request
-    result = getCollectorCountry(False, country)
+    result = collectorCountry_controller.getCollectorByCountry(False, country)
     return jsonify([dict(row) for row in result])
