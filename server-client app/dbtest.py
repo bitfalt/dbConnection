@@ -3,8 +3,10 @@ import pyodbc
 def connect():
     server = 'localhost'
     database = 'esenVerde'
+    username = "user"
+    password = "123456"
 
-    conn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};TRUSTED_CONNECTION=yes;')
+    conn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
     
     return conn
 
@@ -21,7 +23,7 @@ def executeQuery(query):
         cursor.close()
         conn.close() 
 
-query = "SELECT * FROM dbo.ProcessXCountryPrices ORDER BY id"
+query = "SELECT * FROM dbo.ProcessXCountryPrices"
 data = executeQuery(query)
 
 # print("ID: " + str(data[0][0]))
