@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from ..controllers import ORMQuery_controller
+from app.controllers import ORMQuery_controller
 
 bp = Blueprint('ORMQuery', __name__, url_prefix="/ORMQuery")
 
