@@ -1,10 +1,10 @@
-from flask import Blueprint, jsonify
-from ..controllers import collector_controller
+from flask import Blueprint, jsonify, request
+from ..controllers import ORMQuery_controller
 
-bp = Blueprint('ORMQuery', _name_, url_prefix="/ORMQuery")
+bp = Blueprint('ORMQuery', __name__, url_prefix="/ORMQuery")
 
 @bp.route("/", methods=["POST"])
 def getCollectorsByCountryORM():
     countryName = request.json["country"]
-    result = collector_controller.get_collectors_by_country(countryName)
+    result = ORMQuery_controller.getCollectorsByCountryORM(countryName)
     return jsonify(result)
