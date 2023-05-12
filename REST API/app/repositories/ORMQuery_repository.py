@@ -3,6 +3,7 @@ from app.repositories.collectorCountry_repository import createConnection
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
+# Obtener los colectores de un pais usando ORM
 def getCollectorsByCountryORM(countryName):
 
     engine = createConnection(False)
@@ -17,6 +18,8 @@ def getCollectorsByCountryORM(countryName):
 
     # Recorrer el resultado y agregarlo a la lista como diccionario para JSON
     for res in result:
+        # Se crea el diccionario con el nombre. 
+        # "name" es el nombre de la columna en la tabla y res[0] el valor
         resultDict.append({"name": res[0]})
 
     return resultDict

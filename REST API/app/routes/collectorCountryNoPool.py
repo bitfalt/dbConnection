@@ -4,6 +4,8 @@ from app.controllers import collectorCountry_controller
 # Create blueprint (route)
 bp = Blueprint('collectorCountryNoPool', __name__, url_prefix='/collectorCountryNoPool')
 
+# Definir ruta y metodos de la misma
+# bp.route define la ruta dada en Blueprint()
 @bp.route('/', methods=['POST'])
 def getCollectorByCountryNoPool():
     # Get country from request

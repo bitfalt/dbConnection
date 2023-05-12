@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 
+# Declaracion de las tablas como objetos para el ORM y realizar las consultas
 db = SQLAlchemy()
 
 class Collector(db.Model): 
