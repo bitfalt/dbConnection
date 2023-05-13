@@ -12,6 +12,7 @@ def getCollectorsByCountryORM(countryName):
  
     query = select(Collector.name).select_from(Collector).join(Office).join(Address).join(Country).where(Country.name == countryName)
     result = session.execute(query)
+    session.close()
 
     # Crear lista vacia
     resultDict = []

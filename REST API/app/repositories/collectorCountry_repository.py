@@ -11,7 +11,7 @@ def createConnection(pool):
     db = "esenVerde"
     driver = "ODBC Driver 17 for SQL Server"
     if pool:
-        engine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=10, max_overflow=0)
+        engine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=5, max_overflow=10)
     else:
         engine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", poolclass=NullPool)
     return engine
@@ -26,5 +26,5 @@ def getCollectorCountry(pool, country):
         # Convertir el resultado a una lista con diccionarios
         keys = result.keys()
         resultDict = [dict(zip(keys, row)) for row in result.fetchall()]
-
+        connection.close()
         return resultDict
