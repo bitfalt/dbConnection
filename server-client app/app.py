@@ -1,5 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
+import pyodbc
+
+server = 'localhost'
+database = 'esenVerde'
+username = "user"
+password = "123456"
+
+connection = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
 # db variables
 cname = "Esencial Verde"
@@ -9,6 +17,64 @@ WOPTIONS = ["Chemical Waste", "Nuclear Waste", "Paper Waste", "Organic Waste"]
 COPTIONS = ["Suli", "Calvo", "Makers", "Quakers"]
 NUMBERS = []
 
+# crear dos listas para almacenar los datos de los contenedores y los desechos
+containersList = []
+wastesList = []
+
+# función para agregar los datos ingresados por el usuario a la lista waste
+def addDataWaste():
+    # obtener los datos ingresados por el usuario
+    tipoWaste = wasteType.get()
+    cantidadWaste = numberWaste.get()
+
+    # validar que se ingresaron datos válidos
+    if tipoWaste and cantidadWaste:
+        # agregar los datos a la lista correspondiente
+        wastesList.append([tipoWaste, int(cantidadWaste)])
+
+# función para agregar los datos ingresados por el usuario a la lista container
+def addDataContainer():
+    # obtener los datos ingresados por el usuario
+    modeloContainer = containerModel.get()
+    cantidadContainer = numberContainers.get()
+
+    # validar que se ingresaron datos válidos
+    if modeloContainer and cantidadContainer:
+        # agregar los datos a la lista correspondiente
+        containersList.append([modeloContainer, int(cantidadContainer)])
+
+# función para enviar los datos del waste a la base de datos mediante un TVP
+def sendDataWaste():
+    # crear una tabla de valor de parámetro para los desechos
+    wastesTVP = pyodbc.TableValuedParameter('[dbo].[WastesTVP]')
+    wastesTVP.add_rows(wastesList)
+
+    # crear un cursor para ejecutar el stored procedure
+    cursor = connection.cursor()
+
+    # ejecutar el stored procedure con los parámetros adecuados
+    # cursor.execute('EXEC canjear_residuos ?, ?, ?, ?', productor_id, transportista_id, tipo_residuo, cantidad_recipientes)
+
+    # guardar los cambios en la base de datos
+    connection.commit()
+
+# función para enviar los datos del container a la base de datos mediante un TVP
+def sendDataContainer():
+    # crear una tabla de valor de parámetro para los contenedores
+    containersTVP = pyodbc.TableValuedParameter('[dbo].[ContainersTVP]')
+    containersTVP.add_rows(containersList)
+
+    # crear un cursor para ejecutar el stored procedure
+    cursor = connection.cursor()
+
+    # ejecutar el stored procedure con los parámetros adecuados
+    # cursor.execute('EXEC canjear_residuos ?, ?, ?, ?', productor_id, transportista_id, tipo_residuo, cantidad_recipientes)
+
+    # guardar los cambios en la base de datos
+    connection.commit()
+
+
+
 # create list of numbers from 1 to 100
 for i in range(1, 101):
     NUMBERS.append(str(i))
@@ -17,7 +83,7 @@ for i in range(1, 101):
 
 root = tk.Tk()
 root.resizable(False, False)
-root.geometry('800x620')
+root.geometry('800x500')
 
 # set background color
 root.configure(bg='#f2f2f2')
@@ -38,33 +104,13 @@ producerLabel.place(x=10, y=130)
 
 
 
-# create labels for Waste to pickup and Containers to deliver
-wasteLabel = tk.Label(root, text="Waste to pickup:", bg='#f2f2f2', font=('Helvetica', 14, 'bold'))
-wasteLabel.place(x=10, y=200)
-
-wasteListbox = tk.Listbox(root, bg='white', font=('Helvetica', 14))
-wasteListbox.place(x=10, y=260, width=250, height=200)
-
-for i in range(30):
-    wasteListbox.insert(tk.END, f"Item {i+1}")
-
-containerLabel = tk.Label(root, text="Containers to deliver:", bg='#f2f2f2', font=('Helvetica', 14, 'bold'))
-containerLabel.place(x=300, y=200)
-
-containerListbox = tk.Listbox(root, bg='white', font=('Helvetica', 14))
-containerListbox.place(x=300, y=260, width=250, height=200)
-
-for i in range(20):
-    containerListbox.insert(tk.END, f"Item {i+1}")
-
-
 # create widgets to add waste
 
 WastePickupLabel = tk.Label(root, text="Waste to pickup", bg='#f2f2f2', font=('Helvetica', 16, 'bold'))
-WastePickupLabel.place(x=10, y=460) 
+WastePickupLabel.place(x=10, y=200) 
 
 amountLabelW = tk.Label(root, text="Amount:", bg='#f2f2f2', font=('Helvetica', 14))
-amountLabelW.place(x=10, y=495)
+amountLabelW.place(x=10, y=235)
 numberWaste = tk.StringVar(root)
 numberWaste.set("")
 
@@ -72,7 +118,7 @@ numberWasteSelection = ttk.Combobox(root, textvariable=numberWaste, values=NUMBE
 numberWasteSelection["state"] = "readonly"
 
 numberWasteSelection.pack()
-numberWasteSelection.place(x=100, y=495, width=80, height=30)
+numberWasteSelection.place(x=100, y=235, width=80, height=30)
 
 # numberEntry = tk.Entry(root, textvariable=numberWaste, font=('Helvetica', 14))
 # numberEntry.place(x=100, y=470, width=80, height=30)
@@ -85,20 +131,20 @@ WasteTypeSelection = ttk.Combobox(root, textvariable=wasteType, values=WOPTIONS,
 WasteTypeSelection["state"] = "readonly"
 
 WasteTypeSelection.pack()
-WasteTypeSelection.place(x=190, y=495, width=180, height=30)
+WasteTypeSelection.place(x=190, y=235, width=180, height=30)
 
-addBtnW = tk.Button(root, text="Add", bg='#f2f2f2', font=('Helvetica', 14))
-addBtnW.place(x=380, y=495, width=80, height=30)
-submitBtnW = tk.Button(root, text="Submit", bg='#f2f2f2', font=('Helvetica', 14))
-submitBtnW.place(x=470, y=495, width=80, height=30)
+addBtnW = tk.Button(root, text="Add", bg='#f2f2f2', font=('Helvetica', 14), command=addDataWaste)
+addBtnW.place(x=380, y=235, width=80, height=30)
+submitBtnW = tk.Button(root, text="Submit", bg='#f2f2f2', font=('Helvetica', 14), command=sendDataWaste)
+submitBtnW.place(x=470, y=235, width=80, height=30)
 
 # create widgets to add container
 
 ContainerDeliverLabel = tk.Label(root, text="Containers to deliver", bg='#f2f2f2', font=('Helvetica', 16, 'bold'))
-ContainerDeliverLabel.place(x=10, y=530)
+ContainerDeliverLabel.place(x=10, y=280)
 
 amountLabelC = tk.Label(root, text="Amount:", bg='#f2f2f2', font=('Helvetica', 14))
-amountLabelC.place(x=10, y=560)
+amountLabelC.place(x=10, y=310)
 numberContainers = tk.StringVar(root)
 numberContainers.set("")
 
@@ -106,7 +152,7 @@ numberContainersSelection = ttk.Combobox(root, textvariable=numberContainers, va
 numberContainersSelection["state"] = "readonly"
 
 numberContainersSelection.pack()
-numberContainersSelection.place(x=100, y=560, width=80, height=30)
+numberContainersSelection.place(x=100, y=310, width=80, height=30)
 
 
 # numberEntry = tk.Entry(root, textvariable=numberContainers, font=('Helvetica', 14))
@@ -120,11 +166,15 @@ containerModelSelection = ttk.Combobox(root, textvariable=containerModel, values
 containerModelSelection["state"] = "readonly"
 
 containerModelSelection.pack()
-containerModelSelection.place(x=190, y=560, width=180, height=30)
+containerModelSelection.place(x=190, y=310, width=180, height=30)
 
-addBtnC = tk.Button(root, text="Add", bg='#f2f2f2', font=('Helvetica', 14))
-addBtnC.place(x=380, y=560, width=80, height=30)
-submitBtnC = tk.Button(root, text="Submit", bg='#f2f2f2', font=('Helvetica', 14))
-submitBtnC.place(x=470, y=560, width=80, height=30)
+addBtnC = tk.Button(root, text="Add", bg='#f2f2f2', font=('Helvetica', 14), command=addDataContainer)
+addBtnC.place(x=380, y=310, width=80, height=30)
+submitBtnC = tk.Button(root, text="Submit", bg='#f2f2f2', font=('Helvetica', 14), command=sendDataContainer)
+submitBtnC.place(x=470, y=310, width=80, height=30)
 
 root.mainloop()
+
+
+# cerrar la conexión con la base de datos
+connection.close()
