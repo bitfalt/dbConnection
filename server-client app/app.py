@@ -68,7 +68,7 @@ def sendDataContainer():
     cursor = connection.cursor()
 
     # ejecutar el stored procedure con los parámetros adecuados
-    # cursor.execute('EXEC canjear_residuos ?, ?, ?, ?', productor_id, transportista_id, tipo_residuo, cantidad_recipientes)
+    cursor.execute("EXEC exchangeWaste @ContainersTVP=?", containersTVP)
 
     # guardar los cambios en la base de datos
     connection.commit()
