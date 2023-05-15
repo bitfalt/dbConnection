@@ -1,12 +1,12 @@
 from app.repositories.models import db, Collector, Office, Address, Country
-from app.repositories.collectorCountry_repository import createConnection
+from app.repositories.collectorCountry_repository import noPoolEngine
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
 # Obtener los colectores de un pais usando ORM
 def getCollectorsByCountryORM(countryName):
 
-    engine = createConnection(False)
+    engine = noPoolEngine
     Session = sessionmaker(bind=engine)
     session = Session()
  
