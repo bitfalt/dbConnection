@@ -9,28 +9,14 @@ port = "1433"
 db = "esenVerde"
 driver = "ODBC Driver 17 for SQL Server"
 
+# Crear 2 engines, uno con pool y otro sin pool
 poolEngine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=5, max_overflow=10)
 noPoolEngine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", poolclass=NullPool)
-
-# Crear la conexion con el servidor de base de datos
-# pool: True si se desea usar un pool de conexiones, False si no
-def createConnection(pool):
-    global engine
-    username = "user"
-    password = "123456"
-    server = "localhost"
-    port = "1433"
-    db = "esenVerde"
-    driver = "ODBC Driver 17 for SQL Server"
-    if pool:
-        engine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=5, max_overflow=5)
-    else:
-        engine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", poolclass=NullPool)
-    return engine
 
 
 # Ejecutar un query (SP) en la base de datos con parametros
 def getCollectorCountry(pool, country):
+    # Si pool es True, usar el engine con pool, sino usar el engine sin pool
     if pool:
         engine = poolEngine
     else:

@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 # Obtener los colectores de un pais usando ORM
 def getCollectorsByCountryORM(countryName):
-
+    # Usar el engine sin pool
     engine = noPoolEngine
     Session = sessionmaker(bind=engine)
     session = Session()
