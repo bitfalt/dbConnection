@@ -1,0 +1,13 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# server client app
+server-client-app/node_modules
+server-client-app/.pnp
+server-client-app/.pnp.js
+
+server-client-app/npm-debug.log*
+server-client-app/yarn-debug.log*
+server-client-app/yarn-error.log*
+
+# REST-API
+REST-API/**/__pycache__/
