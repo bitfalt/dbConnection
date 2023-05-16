@@ -1,4 +1,54 @@
-.App {
+body {
+  background-color: #201E1F;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding-left: 20px;
+  background-color: #201E1F;
+  color: #DCEED1;
+}
+
+button {
+  background-color: #8D909B;
+  color: #DCEED1;
+  border: none;
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 4px;
+  cursor: pointer;
+}
+
+select {
+  color: #DCEED1; 
+  background-color: #8D909B;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 4px 4px;
+  border-radius: 5px;
+}
+
+.confirm-exchange {
+  margin-top: 20px;
+}
+
+.status {
+  color: #F26430;
+  padding-left: 5px;
+}
+
+
+
+
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +85,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

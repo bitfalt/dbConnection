@@ -1,5 +1,6 @@
 // App.js
 import React, { useEffect, useState } from "react";
+import './App.css';
 import axios from "axios";
 
 function App() {
@@ -87,7 +88,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App container">
       <h1>Driver: Manuel Granados</h1>
       <h2>Destination: Costa Rica Calle 1, San Juan, PR</h2>
       <h2>Collector: Esencial Verde</h2>
@@ -107,9 +108,9 @@ function App() {
         <button onClick={submitContainers}>Submit Containers</button>
       </div>
       <div>
-        <button onClick={storedProcedure}>Confirm Exchange</button>
+        <button className="confirm-exchange" onClick={storedProcedure}>Confirm Exchange</button>
         {status && 
-        <div>
+        <div className="status">
           <h4>Status: {status.Status}</h4>
           <h4>Message: {status.Message}</h4>
         </div>
