@@ -118,10 +118,10 @@ def postContainers():
             result.append(container["number"])
             containerList.append(result)
 
-        return jsonify({"Status": "Success", "Message": "Containers added successfully"}, 200)
+        return jsonify({"Status": "Success", "Message": "Containers added successfully"}), 200
     
     except Exception as e:
-        return jsonify({"Status": "Error", "Message": str(e)}, 400)
+        return jsonify({"Status": "Error", "Message": str(e)}), 400
 
 @app.route('/submit-waste-types', methods=['POST'])
 def postWasteTypes():
@@ -135,22 +135,22 @@ def postWasteTypes():
             result.append(waste["number"])
             wasteList.append(result)
 
-        return jsonify({"Status": "Success", "Message": "Waste types added successfully"}, 200)
+        return jsonify({"Status": "Success", "Message": "Waste types added successfully"}), 200
     
     except Exception as e:
-        return jsonify({"Status": "Error", "Message": str(e)}, 400)
+        return jsonify({"Status": "Error", "Message": str(e)}), 400
 
 @app.route('/test-lists', methods=['GET'])
 def testLists():
     global containerList
     global wasteList
-    return jsonify({"Status": "Success", "Message": "Lists created successfully", "Containers": containerList, "WasteTypes": wasteList}, 200)
+    return jsonify({"Status": "Success", "Message": "Lists created successfully", "Containers": containerList, "WasteTypes": wasteList}), 200
 
 @app.route('/test-tvp', methods=['GET'])
 def testTVP():
     containerTVP = addContainersTVP()
     wasteTVP = addWasteTypeTVP()
-    return jsonify({"Status": "Success", "Message": "TVPs created successfully", "Containers": containerTVP, "WasteTypes": wasteTVP}, 200)
+    return jsonify({"Status": "Success", "Message": "TVPs created successfully", "Containers": containerTVP, "WasteTypes": wasteTVP}), 200
 
 @app.route('/execute-sp', methods=['GET'])
 def executeStoredProcedure():
@@ -162,12 +162,11 @@ def executeStoredProcedure():
             movtypeid = getMovementTypeID()
             cursor.execute("EXECUTE dbo.exchangeContainer @containersTVP = ?, @wastetypeTVP = ?, @movtypeid = ?", containerTVP, wastetypeTVP ,movtypeid)
             conn.commit()
-            print("ayuda")
-            return jsonify({"Status": "Success", "Message": "Stored Procedure executed successfully"}, 200)
+            return jsonify({"Status": "Success", "Message": "Stored Procedure executed successfully"}), 200
         
         except pyodbc.Error as ex:
             sqlstate = ex.args[1]
-            return jsonify({"Status": "Error", "Message": str(ex), "SQLState": sqlstate}, 400)
+            return jsonify({"Status": "Error", "Message": str(ex), "SQLState": sqlstate}), 400
         
 if __name__ == '__main__':
     app.run(debug=True)

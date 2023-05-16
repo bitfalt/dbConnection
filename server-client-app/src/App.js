@@ -110,8 +110,8 @@ function App() {
         <button onClick={storedProcedure}>Confirm Exchange</button>
         {status && 
         <div>
-          <p>Status: {status.Status}</p>
-          <p>Message: {status.Messsage}</p>
+          <h4>Status: {status.Status}</h4>
+          <h4>Message: {status.Message}</h4>
         </div>
         }
       </div>
