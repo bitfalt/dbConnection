@@ -10,7 +10,7 @@ db = "esenVerde"
 driver = "ODBC Driver 17 for SQL Server"
 
 # Crear 2 engines, uno con pool y otro sin pool
-poolEngine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=5, max_overflow=10)
+poolEngine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", pool_size=5, max_overflow=5)
 noPoolEngine = create_engine(f"mssql+pyodbc://{username}:{password}@{server}:{port}/{db}?driver={driver}", poolclass=NullPool)
 
 
